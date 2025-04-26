@@ -3,9 +3,17 @@
   "version": "1.1.1",
   "description": "MCP to Status Invest Scraper",
   "main": "build/main.js",
-  "author": "Newerton Vargas de Araujo",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:newerton/mcp-status-invest.git"
+  },
+  "author": "Newerton (https://newerton.com)",
   "type": "module",
-  "license": "MPL-2.0",
+  "license": "MIT",
+  "bin": "./build/index.js",
+  "files": [
+    "build"
+  ],
   "keywords": [
     "mpc",
     "status invest"
