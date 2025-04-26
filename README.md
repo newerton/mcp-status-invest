@@ -61,7 +61,7 @@ build/                    # Compiled JavaScript code
 ## Installation
 
 ```bash
-git clone <REPOSITORY_URL>
+git clone git@github.com:newerton/mcp-status-invest.git
 cd mcp-status-invest
 npm install
 npm run build
