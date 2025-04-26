@@ -1,6 +1,6 @@
 <div align="center">
 
-# MCP Status Invest
+# Status Invest - MCP Server
 
 This project is part of the Model Context Protocol (MCP) ecosystem and provides tools to interact with external APIs and manage specific domain models. It is designed to demonstrate how to build an MCP server with external API integration and data validation.
 
@@ -10,7 +10,7 @@ This project is part of the Model Context Protocol (MCP) ecosystem and provides 
 <tr>
 <td style="width: 40%; padding: 15px; vertical-align: middle; border: none;">An integration that enables MCP tools to query stock market data, such as stock prices, indicators, and payment dates, using the Status Invest API.</td>
 <td style="width: 60%; padding: 0; vertical-align: middle; border: none; min-width: 300px; text-align: center;"><a href="https://glama.ai/mcp/servers/@newerton/mcp-status-invest">
-  <img width="380" height="200" src="https://glama.ai/mcp/servers/@newerton/mcp-status-invest/badge" />
+  <img style="max-width: 100%; height: auto; min-width: 300px;" src="https://glama.ai/mcp/servers/@newerton/mcp-status-invest/badge" alt="Status Invest - MCP Server" />
 </a></td>
 </tr>
 </table>
