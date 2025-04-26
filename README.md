@@ -6,6 +6,15 @@ This project is part of the Model Context Protocol (MCP) ecosystem and provides 
 
 </div>
 
+<table style="border-collapse: collapse; width: 100%; table-layout: fixed;">
+<tr>
+<td style="width: 40%; padding: 15px; vertical-align: middle; border: none;">An integration that enables MCP tools to query stock market data, such as stock prices, indicators, and payment dates, using the Status Invest API.</td>
+<td style="width: 60%; padding: 0; vertical-align: middle; border: none; min-width: 300px; text-align: center;"><a href="https://glama.ai/mcp/servers/@newerton/mcp-status-invest">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@newerton/mcp-status-invest/badge" />
+</a></td>
+</tr>
+</table>
+
 ## Table of Contents
 
 - [Features](#features)
