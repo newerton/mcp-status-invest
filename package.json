@@ -5,6 +5,7 @@
   "main": "build/main.js",
   "author": "Newerton Vargas de Araujo",
   "type": "module",
+  "license": "MPL-2.0",
   "keywords": [
     "mpc",
     "status invest"
