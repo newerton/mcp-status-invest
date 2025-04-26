@@ -20,6 +20,7 @@ This project is part of the Model Context Protocol (MCP) ecosystem and provides 
 
 - **get-acoes**: Fetch basic stock information.
 - **get-indicadores**: Fetch detailed stock indicator information.
+- **get-acoes-datas-pagamento**: Fetch stock payment dates.
 - Input validation using [Zod](https://github.com/colinhacks/zod).
 - Integration with the Status Invest API using `fetch` (infrastructure layer).
 
