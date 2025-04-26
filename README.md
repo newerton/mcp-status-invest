@@ -93,4 +93,5 @@ Pull requests are welcome! Feel free to open issues and discuss improvements.
 
 ## License
 
-This project is licensed under the MIT license.
+This project is licensed under the Mozilla Public License 2.0 - see the [LICENSE](https://github.com/newerton/mcp-status-invest/blob/main/LICENSE) file for details.
+
