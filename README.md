@@ -4,6 +4,10 @@
 
 This project is part of the Model Context Protocol (MCP) ecosystem and provides tools to interact with external APIs and manage specific domain models. It is designed to demonstrate how to build an MCP server with external API integration and data validation.
 
+<a href="https://glama.ai/mcp/servers/@newerton/mcp-status-invest">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@newerton/mcp-status-invest/badge" alt="Status Invest Server MCP server" />
+</a>
+
 </div>
 
 ## Table of Contents
