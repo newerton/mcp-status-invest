@@ -1,27 +1,19 @@
 {
   "name": "mcp-status-invest",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "MCP to Status Invest Scraper",
-  "main": "main.js",
+  "main": "build/main.js",
   "author": "Newerton Vargas de Araujo",
-  "license": "ISC",
+  "type": "module",
   "keywords": [
     "mpc",
     "status invest"
   ],
-  "type": "module",
-  "bin": {
-    "weather": "./build/main.js"
-  },
-  "files": [
-    "build"
-  ],
   "scripts": {
+    "start": "node build/main.js",
     "start:dev": "tsx watch src/main.ts",
     "build": "tsc && chmod 755 build/main.js",
-    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test:mcp": "node --experimental-loader ts-node/esm test-mcp-client.ts"
+    "lint": "eslint \"{src,test}/**/*.ts\" --fix"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.10.2",
