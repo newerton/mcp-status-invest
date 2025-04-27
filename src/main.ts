@@ -6,9 +6,8 @@ import { StatusInvestApiService } from './infrastructure/services/StatusInvestAp
 import { StatusInvestToolsController } from './interface/controllers/StatusInvestToolsController.js';
 
 async function main() {
-  // Criação da instância do servidor MCP
   const server = new McpServer({
-    name: 'weather',
+    name: 'stocks',
     version: '1.0.0',
     capabilities: {
       resources: {},
@@ -16,14 +15,11 @@ async function main() {
     },
   });
 
-  // Inicializando serviços e controladores
   const apiService = new StatusInvestApiService();
   const service = new StatusInvestService(apiService);
 
-  // Controlador que registra as ferramentas
   new StatusInvestToolsController(server, service);
 
-  // Configurando e iniciando o servidor
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error('Status Invest MCP Server running on stdio');
