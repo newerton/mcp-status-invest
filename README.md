@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/newerton-mcp-status-invest-badge.png)](https://mseep.ai/app/newerton-mcp-status-invest)
+
 <div align="center">
 
 # Status Invest - MCP Server
