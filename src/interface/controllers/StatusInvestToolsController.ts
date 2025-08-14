@@ -26,7 +26,8 @@ export class StatusInvestToolsController {
       {
         stocks: z.array(z.string()).describe('Array of stock symbols'),
       },
-      async ({ stocks }) => {
+      async (args) => {
+        const { stocks } = args as { stocks: string[] };
         const infos = await this.service.getStockResume(stocks);
 
         return {
@@ -48,7 +49,8 @@ export class StatusInvestToolsController {
       {
         stocks: z.array(z.string()).describe('Array of stock symbols'),
       },
-      async ({ stocks }) => {
+      async (args) => {
+        const { stocks } = args as { stocks: string[] };
         const infos = await this.service.getStockIndicators(stocks);
 
         return {
@@ -90,7 +92,8 @@ export class StatusInvestToolsController {
           .optional()
           .describe('Ação'),
       },
-      async (paymentDatesInput: GetPaymentDatesInput) => {
+      async (args) => {
+        const paymentDatesInput = args as GetPaymentDatesInput;
         const infos =
           await this.service.getStockPaymentDates(paymentDatesInput);
 
