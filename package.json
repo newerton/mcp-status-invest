@@ -1,6 +1,6 @@
 {
   "name": "mcp-status-invest",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "MCP to Status Invest Scraper",
   "main": "build/main.js",
   "repository": {
