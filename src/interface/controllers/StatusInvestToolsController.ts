@@ -17,6 +17,7 @@ export class StatusInvestToolsController {
     this.registerGetStockToolHandler();
     this.registerGetIndicatorsToolHandler();
     this.registerGetStockPaymentDatesToolHandler();
+    this.registerPortfolioAnalysisToolHandler();
   }
 
   private registerGetStockToolHandler(): void {
@@ -27,7 +28,25 @@ export class StatusInvestToolsController {
         stocks: z.array(z.string()).describe('Array of stock symbols'),
       },
       async (args) => {
-        const { stocks } = args as { stocks: string[] };
+        let stocks: string[];
+        if (Array.isArray(args.stocks)) {
+          stocks = args.stocks;
+        } else if (typeof args.stocks === 'string') {
+          try {
+            stocks = JSON.parse(args.stocks);
+          } catch {
+            stocks = [args.stocks];
+          }
+        } else {
+          const allValues = Object.values(args);
+          const arrayValue = allValues.find((v) => Array.isArray(v));
+          if (arrayValue) {
+            stocks = arrayValue;
+          } else {
+            stocks = allValues.flat().filter((v) => typeof v === 'string');
+          }
+        }
+
         const infos = await this.service.getStockResume(stocks);
 
         return {
@@ -50,7 +69,21 @@ export class StatusInvestToolsController {
         stocks: z.array(z.string()).describe('Array of stock symbols'),
       },
       async (args) => {
-        const { stocks } = args as { stocks: string[] };
+        let stocks: string[];
+        if (Array.isArray(args.stocks)) {
+          stocks = args.stocks;
+        } else if (typeof args.stocks === 'string') {
+          try {
+            stocks = JSON.parse(args.stocks);
+          } catch {
+            stocks = [args.stocks];
+          }
+        } else {
+          stocks = Object.values(args)
+            .flat()
+            .filter((v) => typeof v === 'string');
+        }
+
         const infos = await this.service.getStockIndicators(stocks);
 
         return {
@@ -105,6 +138,97 @@ export class StatusInvestToolsController {
             },
           ],
         };
+      },
+    );
+  }
+
+  private registerPortfolioAnalysisToolHandler(): void {
+    this.server.tool(
+      'analise-carteira',
+      'Análise completa de carteira com rebalanceamento multifatorial',
+      {
+        stocks: z
+          .array(z.string())
+          .describe('Array of stock symbols (e.g., ["BBAS3", "ITUB3"])'),
+        totalAmount: z
+          .number()
+          .describe('Total amount available to invest in BRL'),
+        orderCost: z.number().describe('Cost per order in BRL'),
+        strategy: z
+          .string()
+          .optional()
+          .describe(
+            'Investment strategy (buy-and-hold, dividend-focused, etc.)',
+          ),
+      },
+      async (args) => {
+        try {
+          const {
+            stocks,
+            totalAmount,
+            orderCost,
+            strategy = 'buy-and-hold',
+          } = args;
+
+          const stocksArray: string[] = Array.isArray(stocks)
+            ? stocks
+            : typeof stocks === 'string'
+              ? [stocks]
+              : [];
+
+          const [basicInfo, indicators] = await Promise.all([
+            this.service.getStockResume(stocksArray),
+            this.service.getStockIndicators(stocksArray),
+          ]);
+
+          const portfolioData = {
+            strategy,
+            totalAmount,
+            orderCost,
+            stocks: stocks.map((ticker: string, index: number) => {
+              const stock = indicators[index];
+              const basic = basicInfo[index];
+              return {
+                ticker: stock.stock,
+                name: basic.name,
+                price: basic.price,
+                data: stock,
+              };
+            }),
+            basicInfo,
+            indicators,
+            timestamp: new Date().toISOString(),
+          };
+
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify(portfolioData, null, 2),
+              },
+            ],
+          };
+        } catch (error) {
+          console.error('Portfolio analysis error:', error);
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify(
+                  {
+                    error:
+                      error instanceof Error
+                        ? error.message
+                        : 'Unknown error occurred during portfolio analysis',
+                    timestamp: new Date().toISOString(),
+                  },
+                  null,
+                  2,
+                ),
+              },
+            ],
+          };
+        }
       },
     );
   }
