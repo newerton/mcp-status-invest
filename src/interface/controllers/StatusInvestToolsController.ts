@@ -1,6 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import dayjs from 'dayjs';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 
 import { StatusInvestService } from '../../application/services/StatusInvestService.js';
 import { GetPaymentDatesInput } from '../../domain/models/StatusInvestServiceModel.js';
@@ -28,24 +28,9 @@ export class StatusInvestToolsController {
         stocks: z.array(z.string()).describe('Array of stock symbols'),
       },
       async (args) => {
-        let stocks: string[];
-        if (Array.isArray(args.stocks)) {
-          stocks = args.stocks;
-        } else if (typeof args.stocks === 'string') {
-          try {
-            stocks = JSON.parse(args.stocks);
-          } catch {
-            stocks = [args.stocks];
-          }
-        } else {
-          const allValues = Object.values(args);
-          const arrayValue = allValues.find((v) => Array.isArray(v));
-          if (arrayValue) {
-            stocks = arrayValue;
-          } else {
-            stocks = allValues.flat().filter((v) => typeof v === 'string');
-          }
-        }
+        const stocks: string[] = Array.isArray(args.stocks)
+          ? args.stocks
+          : [args.stocks];
 
         const infos = await this.service.getStockResume(stocks);
 
@@ -69,20 +54,9 @@ export class StatusInvestToolsController {
         stocks: z.array(z.string()).describe('Array of stock symbols'),
       },
       async (args) => {
-        let stocks: string[];
-        if (Array.isArray(args.stocks)) {
-          stocks = args.stocks;
-        } else if (typeof args.stocks === 'string') {
-          try {
-            stocks = JSON.parse(args.stocks);
-          } catch {
-            stocks = [args.stocks];
-          }
-        } else {
-          stocks = Object.values(args)
-            .flat()
-            .filter((v) => typeof v === 'string');
-        }
+        const stocks: string[] = Array.isArray(args.stocks)
+          ? args.stocks
+          : [args.stocks];
 
         const infos = await this.service.getStockIndicators(stocks);
 
@@ -115,7 +89,7 @@ export class StatusInvestToolsController {
             message: 'Data final inválida. Formato esperado: YYYY-MM-DD',
           })
           .describe('Data final'),
-        stock: z
+        stocks: z
           .array(
             z.string().regex(/^[A-Z]{4}(3|4|11)$/, {
               message:
