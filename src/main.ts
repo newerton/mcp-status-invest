@@ -9,10 +9,6 @@ async function main() {
   const server = new McpServer({
     name: 'stocks',
     version: '1.0.0',
-    capabilities: {
-      resources: {},
-      tools: {},
-    },
   });
 
   const apiService = new StatusInvestApiService();
