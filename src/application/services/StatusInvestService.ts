@@ -4,11 +4,11 @@ import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 import voca from 'voca';
 
 import { TypeEnum } from '../../domain/models/StatusInvestModel.js';
-import {
+import type {
   GetPaymentDatesInput,
   GetPaymentDatesOutput,
 } from '../../domain/models/StatusInvestServiceModel.js';
-import { StatusInvestApiService } from '../../infrastructure/services/StatusInvestApiService.js';
+import type { StatusInvestApiService } from '../../infrastructure/services/StatusInvestApiService.js';
 
 dayjs.extend(customParseFormat);
 export class StatusInvestService {

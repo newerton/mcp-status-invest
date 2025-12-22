@@ -1,5 +1,5 @@
-import { GetPaymentDatesInput } from '../../domain/models/StatusInvestApiServiceModel.js';
-import {
+import type { GetPaymentDatesInput } from '../../domain/models/StatusInvestApiServiceModel.js';
+import type {
   GetEarnings,
   MainSearchQuery,
 } from '../../domain/models/StatusInvestModel.js';

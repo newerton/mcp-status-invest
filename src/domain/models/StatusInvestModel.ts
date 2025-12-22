@@ -1,13 +1,13 @@
 export enum TypeEnum {
-  'ação' = 1,
-  'fii' = 2,
-  'bdr' = 4,
-  'etf' = 6,
-  'stock' = 12,
-  'fundos' = 15,
+  ação = 1,
+  fii = 2,
+  bdr = 4,
+  etf = 6,
+  stock = 12,
+  fundos = 15,
   'fii-infra' = 22,
-  'fiagro' = 24,
-  'cripto' = 100,
+  fiagro = 24,
+  cripto = 100,
   'etf-exterior' = 901,
 }
 

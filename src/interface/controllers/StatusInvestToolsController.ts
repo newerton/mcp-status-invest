@@ -1,9 +1,9 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import dayjs from 'dayjs';
 import { z } from 'zod/v3';
 
-import { StatusInvestService } from '../../application/services/StatusInvestService.js';
-import { GetPaymentDatesInput } from '../../domain/models/StatusInvestServiceModel.js';
+import type { StatusInvestService } from '../../application/services/StatusInvestService.js';
+import type { GetPaymentDatesInput } from '../../domain/models/StatusInvestServiceModel.js';
 
 export class StatusInvestToolsController {
   constructor(
@@ -159,7 +159,7 @@ export class StatusInvestToolsController {
             strategy,
             totalAmount,
             orderCost,
-            stocks: stocks.map((ticker: string, index: number) => {
+            stocks: stocks.map((_ticker: string, index: number) => {
               const stock = indicators[index];
               const basic = basicInfo[index];
               return {
