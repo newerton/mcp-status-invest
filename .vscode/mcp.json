@@ -3,7 +3,9 @@
     "stocks": {
       "type": "stdio",
       "command": "node",
-      "args": ["D:/www/newerton/mcp/mcp-status-invest/build/main.js"]
+      "args": [
+        "D:/www/newerton/mcp/mcp-status-invest/build/main.js"
+      ]
     }
   }
 }
