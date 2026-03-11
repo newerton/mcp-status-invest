@@ -6,6 +6,10 @@ This project is part of the Model Context Protocol (MCP) ecosystem and provides 
 
 </div>
 
+[![npm version](https://img.shields.io/npm/v/mcp-status-invest.svg)](https://www.npmjs.com/package/mcp-status-invest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![MCPAmpel](https://img.shields.io/endpoint?url=https://mcpampel.com/badge/newerton/mcp-status-invest.json)](https://mcpampel.com/repo/newerton/mcp-status-invest)
+
 <table style="border-collapse: collapse; width: 100%; table-layout: fixed;">
 <tr>
 <td style="width: 40%; padding: 15px; vertical-align: middle; border: none;">An integration that enables MCP tools to query stock market data, such as stock prices, indicators, and payment dates, using the Status Invest API.</td>
