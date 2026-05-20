@@ -17,6 +17,10 @@ export class StatusInvestToolsController {
     this.registerGetStockToolHandler();
     this.registerGetIndicatorsToolHandler();
     this.registerGetStockPaymentDatesToolHandler();
+    this.registerGetFiiIndicatorsToolHandler();
+    this.registerGetFiagroIndicatorsToolHandler();
+    this.registerGetFiiInfraIndicatorsToolHandler();
+    this.registerGetAllFundsToolHandler();
     this.registerPortfolioAnalysisToolHandler();
   }
 
@@ -112,6 +116,165 @@ export class StatusInvestToolsController {
             },
           ],
         };
+      },
+    );
+  }
+
+  private registerGetFiiIndicatorsToolHandler(): void {
+    this.server.tool(
+      'get-fiis',
+      'Buscar indicadores fundamentalistas de FIIs (Fundos Imobiliários)',
+      {
+        tickers: z
+          .array(z.string())
+          .describe('Array of FII tickers (e.g., ["MXRF11", "BTLG11"])'),
+      },
+      async (args) => {
+        const tickers: string[] = Array.isArray(args.tickers)
+          ? args.tickers
+          : [args.tickers];
+
+        const infos = await this.service.getFiiIndicators(tickers);
+
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify(infos, null, 2),
+            },
+          ],
+        };
+      },
+    );
+  }
+
+  private registerGetFiagroIndicatorsToolHandler(): void {
+    this.server.tool(
+      'get-fiagros',
+      'Buscar indicadores fundamentalistas de FIAgros (Fundos de Investimento nas Cadeias Produtivas Agroindustriais)',
+      {
+        tickers: z
+          .array(z.string())
+          .describe('Array of FIAgro tickers (e.g., ["VGIA11", "KNCA11"])'),
+      },
+      async (args) => {
+        const tickers: string[] = Array.isArray(args.tickers)
+          ? args.tickers
+          : [args.tickers];
+
+        const infos = await this.service.getFiagroIndicators(tickers);
+
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify(infos, null, 2),
+            },
+          ],
+        };
+      },
+    );
+  }
+
+  private registerGetFiiInfraIndicatorsToolHandler(): void {
+    this.server.tool(
+      'get-fii-infra',
+      'Buscar indicadores fundamentalistas de FII-Infra (Fundos de Investimento em Infraestrutura)',
+      {
+        tickers: z
+          .array(z.string())
+          .describe(
+            'Array of FII-Infra tickers (e.g., ["IFRA11", "KDIF11", "BDIF11"])',
+          ),
+      },
+      async (args) => {
+        const tickers: string[] = Array.isArray(args.tickers)
+          ? args.tickers
+          : [args.tickers];
+
+        const infos = await this.service.getFiiInfraIndicators(tickers);
+
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify(infos, null, 2),
+            },
+          ],
+        };
+      },
+    );
+  }
+
+  private registerGetAllFundsToolHandler(): void {
+    this.server.tool(
+      'get-fundos-imobiliarios',
+      'Buscar indicadores de FIIs, FIAgros e FII-Infra automaticamente. A tool identifica o tipo de cada ticker e retorna os dados consolidados. Use esta tool para buscar múltiplos tickers sem se preocupar com a classificação.',
+      {
+        tickers: z
+          .array(z.string())
+          .describe(
+            'Array of fund tickers - can be FII, FIAgro or FII-Infra (e.g., ["MXRF11", "VGIA11", "IFRA11", "BTLG11"])',
+          ),
+      },
+      async (args) => {
+        const tickers: string[] = Array.isArray(args.tickers)
+          ? args.tickers
+          : [args.tickers];
+
+        try {
+          // Usa o novo método que tenta cada ticker nas 3 URLs e salva HTMLs
+          const { results, debugInfo, debugDir } =
+            await this.service.getAllFundsWithDebug(tickers);
+
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify(
+                  {
+                    total: results.length,
+                    tickers: tickers,
+                    found: results.map((r) => r.ticker),
+                    notFound: tickers.filter(
+                      (t) =>
+                        !results.some(
+                          (r) => r.ticker.toUpperCase() === t.toUpperCase(),
+                        ),
+                    ),
+                    data: results,
+                    debug: {
+                      htmlSavedTo: debugDir,
+                      tickerAttempts: debugInfo,
+                    },
+                  },
+                  null,
+                  2,
+                ),
+              },
+            ],
+          };
+        } catch (error) {
+          console.error('Error fetching fund indicators:', error);
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify(
+                  {
+                    error:
+                      error instanceof Error
+                        ? error.message
+                        : 'Unknown error occurred',
+                    timestamp: new Date().toISOString(),
+                  },
+                  null,
+                  2,
+                ),
+              },
+            ],
+          };
+        }
       },
     );
   }

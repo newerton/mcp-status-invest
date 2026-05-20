@@ -78,4 +78,28 @@ export class StatusInvestApiService {
     if (!data) return null;
     return data;
   }
+
+  async getFiiData(ticker: string): Promise<string | null> {
+    const data = await this.makeTextRequest<string>(
+      `/fundos-imobiliarios/${ticker.toLowerCase()}`,
+    );
+    if (!data) return null;
+    return data;
+  }
+
+  async getFiagroData(ticker: string): Promise<string | null> {
+    const data = await this.makeTextRequest<string>(
+      `/fiagros/${ticker.toLowerCase()}`,
+    );
+    if (!data) return null;
+    return data;
+  }
+
+  async getFiiInfraData(ticker: string): Promise<string | null> {
+    const data = await this.makeTextRequest<string>(
+      `/fiinfras/${ticker.toLowerCase()}`,
+    );
+    if (!data) return null;
+    return data;
+  }
 }
